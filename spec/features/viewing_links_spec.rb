@@ -1,6 +1,5 @@
 require 'spec_helper'
 
-
 feature "Viewing links" do
 
   scenario "can view links on a page" do
