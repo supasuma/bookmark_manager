@@ -1,6 +1,8 @@
 require 'sinatra/base'
+require 'data_mapper'
+require 'dm-postgres-adapter'
 
-class book-mark < Sinatra::Base
+class BookMark < Sinatra::Base
   get '/' do
     'Hello book-mark!'
   end
