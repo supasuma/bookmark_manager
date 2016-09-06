@@ -1,6 +1,9 @@
 require 'sinatra/base'
 require 'data_mapper'
 require 'dm-postgres-adapter'
+require_relative 'models/link'
+
+ENV['RACK_ENV'] ||= "development"
 
 class BookMark < Sinatra::Base
 
@@ -14,8 +17,8 @@ class BookMark < Sinatra::Base
   end
 
   post '/links' do
-    Link.create(url: params[:url], title: params[:title])
-    redirect '/links'
+   Link.create(url: params[:url], title: params[:title])
+   redirect '/links'
   end
 
 
