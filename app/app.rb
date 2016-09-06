@@ -7,6 +7,10 @@ ENV['RACK_ENV'] ||= "development"
 
 class BookMark < Sinatra::Base
 
+  get '/' do
+    redirect '/links'
+  end
+
   get '/links' do
     @links = Link.all
     erb :'links/index'
