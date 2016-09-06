@@ -9,3 +9,5 @@ gem 'dm-postgres-adapter'
 gem 'sinatra'
 gem 'rspec-sinatra'
 gem 'capybara'
+
+gem 'database_cleaner', '1.5.3'
