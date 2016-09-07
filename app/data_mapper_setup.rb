@@ -8,4 +8,4 @@ DataMapper.setup(:default, ENV['DATABASE_URL'] || "postgres://localhost/bookmark
 
 DataMapper.finalize
 
-DataMapper.auto_upgrade!
+# DataMapper.auto_upgrade!
