@@ -1,14 +1,17 @@
-require 'rake'
 require 'data_mapper'
-require 'dm-postgres-adapter'
+require './app/app.rb'
 
-require '.app/models/tag'
-require 'models/link'
 namespace :db do
+  desc "Non destuctive upgrade"
 
-  desc "auto upgrade the database"
-  task :upgrade do
-    puts "upgrading the database"
+  task :auto_upgrade do
     DataMapper.auto_upgrade!
+    puts "upgrading the database (no data loss)"
+  end
+
+  desc "Destuctive upgrade"
+  task :auto_migrate do
+    DataMapper.auto_migrate!
+    puts "Auto-migrate complete (data was lost)"
   end
 end
