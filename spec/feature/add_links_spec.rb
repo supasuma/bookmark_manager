@@ -1,4 +1,4 @@
-require 'spec_helper'
+
 
 feature 'add links' do
   scenario 'I can add a link to my bookmark manager' do

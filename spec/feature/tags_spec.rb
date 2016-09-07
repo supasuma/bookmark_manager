@@ -1,4 +1,4 @@
-require 'spec_helper'
+
 
 feature 'allow tags to be added to urls' do
   scenario 'user adds a tag to a new link' do

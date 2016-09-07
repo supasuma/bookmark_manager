@@ -5,7 +5,9 @@ ENV['RACK_ENV'] = "test"
 #require File.join(File.dirname(__FILE__), '..', 'bookmark_manager.rb')
 
 require './app/models/link'
+require './app/models/user'
 require './app/app'
+require_relative 'feature/web_helper'
 
 require 'capybara'
 require 'capybara/rspec'
