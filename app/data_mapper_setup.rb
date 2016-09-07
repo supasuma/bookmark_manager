@@ -3,6 +3,9 @@ require 'dm-postgres-adapter'
 
 require_relative 'models/tag'
 require_relative 'models/link'
+require_relative 'models/user'
+
+ENV['RACK_ENV']||= "development"
 
 ENV['RACK_ENV'] ||= "development"
 
