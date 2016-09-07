@@ -1,6 +1,7 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    BCrypt (3.1.11)
     addressable (2.4.0)
     bcrypt (3.1.11)
     bcrypt-ruby (3.1.5)
@@ -107,6 +108,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  BCrypt
   capybara
   data_mapper
   database_cleaner
