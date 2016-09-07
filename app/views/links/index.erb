@@ -4,6 +4,7 @@
   <li>
     Title: <%= link.title %>
     URL:   <%= link.url %>
+    Tag:  <%= link.tags.map(&:name).join(" / ") %>
   </li>
 <% end %>
 </ul>
