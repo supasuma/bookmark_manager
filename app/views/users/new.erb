@@ -1,9 +1,10 @@
 <h1> Don't sign up! </h1>
 
 <form action='/users' method='POST'>
-  <label for='email'>
+
+  <label for="email">
     Email:
-    <input type='text' name='email' value=' <%=@user.email%>'/>
+  <input type="email" name="email" value='<%=@user.email%>' required>
   </label>
   <label for='password'>
     Password:
