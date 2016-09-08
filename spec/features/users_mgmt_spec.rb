@@ -9,6 +9,7 @@ feature 'User sign up' do
 
   scenario 'will not allow user to log in' do
     expect{ wrong_sign_up }.to change(User, :count).by 0
-    # expect(page).to have_content("You've entered your password wrong")
+    expect(current_path).to eq '/users'
+    expect(page).to have_content("You've entered your password wrong")
   end
 end
