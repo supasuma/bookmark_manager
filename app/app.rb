@@ -51,7 +51,7 @@ class BookMark < Sinatra::Base
       flash[:notice] = "New user created"
       redirect to('/links')
     else
-      flash.now[:notice] = "You've entered your password wrong"
+      flash.now[:errors] = @user.errors.full_messages
       erb :'users/new'
     end
 
