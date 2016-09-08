@@ -46,7 +46,6 @@ class BookMark < Sinatra::Base
   post '/users' do
     @user = User.create(email: params[:email], password: params[:password],
                       password_confirmation: params[:password_confirmation])
-
     if @user.save
       session[:user_id] = @user.id
       flash[:notice] = "New user created"
