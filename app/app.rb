@@ -9,7 +9,7 @@ class BookmarkManager < Sinatra::Base
   set :session_secret, 'super secret'
 
   get '/' do
-    "welcome to book mark manager extraordinaire"
+    "welcome to bookmark manager extraordinaire"
   end
 
   get '/users/new' do
