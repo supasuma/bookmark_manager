@@ -1,82 +1,27 @@
 require 'sinatra/base'
 require 'sinatra/flash'
+require 'sinatra/partial'
 require_relative 'data_mapper_setup'
+require_relative 'controllers/links'
+require_relative 'controllers/sessions'
+require_relative 'controllers/users'
 
 class BookMark < Sinatra::Base
 
+  register Sinatra::Partial
+  set :partial_template_engine, :erb
+  enable :partial_underscores
+
   enable :sessions
+  set :views, File.dirname(__FILE__) + '/views'
   set :session_secret, 'super secret'
+
   register Sinatra::Flash
+
 
   get '/' do
     redirect '/links'
   end
-
-  get '/links' do
-    @links = Link.all
-    erb :'links/index'
-  end
-
-  get '/links/new' do
-    erb :'links/new'
-  end
-
-  post '/links' do
-   link = Link.new(url: params[:url], title: params[:title])
-   tags = params[:tags].split(' ')
-   tags.each do |tag|
-      single_tag = Tag.first_or_create(name: tag)
-      link.tags << single_tag
-    end
-   link.save
-   redirect '/links'
-  end
-
-  get '/tags/:name' do
-    tag = Tag.first(name: params[:name])
-    @links = tag ? tag.links : []
-    erb :'links/index'
-  end
-
-  get '/users/new' do
-    @user = User.new
-    erb :'users/new'
-  end
-
-  post '/users' do
-    @user = User.create(email: params[:email], password: params[:password],
-                      password_confirmation: params[:password_confirmation])
-    if @user.save
-      session[:user_id] = @user.id
-      flash[:notice] = "New user created"
-      redirect to('/links')
-    else
-      flash.now[:errors] = @user.errors.full_messages
-      erb :'users/new'
-    end
-  end
-
-  get '/sessions/new' do
-    erb :'sessions/new'
-  end
-
-  post '/sessions' do
-    user = User.authenticate(params[:email], params[:password])
-    if user
-      session[:user_id] = user.id
-      redirect to('/links')
-    else
-      flash.now[:errors] = ['The email or password is incorrect']
-      erb :'sessions/new'
-    end
-  end
-
-  get '/sessions/sign_out' do
-    flash[:notice] = "See ya later sucker, #{current_user.email}"
-    session[:user_id] = nil
-    redirect to('/links')
-  end
-
 
   helpers do
     def current_user
