@@ -8,6 +8,7 @@ class User
   property :id,     Serial
   property :email,  String, required: true, unique: true, format: :email_address
   property :password, BCryptHash
+  property :token, Text
 
   attr_reader :password
   attr_accessor :password_confirmation
@@ -25,18 +26,10 @@ class User
     end
   end
 
-  # def password=(password)
-  #   @password = password
-  #   self.password_digest = BCrypt::Password.create(password)
-  # end
+  def self.reset_password(token, password, password_confirmation)
+    user = first(token: token)
+    user.update(password: password, password_confirmation: password_confirmation)
+  end
 
-  # def login
-  #   @user = User.find_by_email(params[:email])
-  #   if @user.password == params[:password]
-  #     give_token
-  #   else
-  #     redirect_to home_url
-  #   end
-  # end
 
 end

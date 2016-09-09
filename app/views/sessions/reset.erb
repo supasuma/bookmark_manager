@@ -1,0 +1,11 @@
+<h1>Please enter new password</h1>
+<form action="/sessions/reset" method="post">
+<input type="hidden" name="token" value= '<%= @token %>'>
+  <label for="new_password">New Password:
+  <input type="password" name="new_password">
+  </label>
+  <label for="password_confirmation">Password Confirmation:
+  <input type="password" name="password_confirmation">
+  </label>
+  <input type="submit" value="Reset Password">
+</form>

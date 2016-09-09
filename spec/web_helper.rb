@@ -22,3 +22,10 @@ def sign_in(email:, password:)
   fill_in :password, with: password
   click_button 'Login'
 end
+
+def reset_password(email)
+  visit '/sessions/new'
+  click_link 'Forgot Password'
+  fill_in :email, with: email
+  click_button 'Recover Password'
+end

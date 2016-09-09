@@ -20,4 +20,31 @@ class BookMark < Sinatra::Base
     redirect to('/links')
   end
 
+  get '/sessions/recover' do
+    erb :'sessions/recover'
+  end
+
+  post '/sessions/recover' do
+    user = User.first(:email => params[:email])
+    user.update(:token => 'ResetToken')
+    token = user.token
+    flash[:notice] = "You have been sent a recovery email - #{token}"
+  end
+
+  get '/sessions/reset/:token' do
+    @token = params[:token]
+    erb :'sessions/reset'
+  end
+
+  post '/sessions/reset' do
+    check = User.reset_password(params[:token], params[:password], params[:password_confirmation])
+    if check
+      flash[:notice] = "Your password has been reset"
+      redirect '/sessions/new'
+    else
+      flash[:error] = "Your password has not been reset"
+      redirect '/sessions/reset/ResetToken'
+    end
+  end
+
 end

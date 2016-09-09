@@ -17,5 +17,4 @@ class BookMark < Sinatra::Base
       erb :'users/new'
     end
   end
-
 end
