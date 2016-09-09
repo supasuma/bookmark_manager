@@ -42,6 +42,9 @@ class BookMark < Sinatra::Base
     elsif update == :wrong_token
       flash[:errors] = ["Wrong Password Reset Link"]
       redirect '/sessions/recover'
+    elsif update == :expired_token
+      flash[:errors] = ["Your token has expired"]
+      redirect '/sessions/recover'
     else
       flash[:notice] = "Your password has been reset"
       redirect '/sessions/new'

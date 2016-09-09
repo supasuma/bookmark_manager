@@ -11,6 +11,7 @@ gem 'bcrypt'
 gem 'sinatra-flash'
 gem 'sinatra-partial'
 gem 'launchy'
+gem 'timecop'
 
 group :test do
   gem 'capybara'

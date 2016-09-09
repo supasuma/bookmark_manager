@@ -10,6 +10,7 @@ class User
   property :email,  String, required: true, unique: true, format: :email_address
   property :password, BCryptHash
   property :token, String
+  property :time, Time
 
   attr_reader :password
   attr_accessor :password_confirmation
@@ -29,16 +30,18 @@ class User
 
   def self.reset_password(token, password, password_confirmation)
     user = first(token: token)
-    if user
-      user.update(password: password, password_confirmation: password_confirmation, token: nil)
-    else
+    if user.nil?
       :wrong_token
+    elsif user.time < Time.now
+      :expired_token
+    else
+      user.update(password: password, password_confirmation: password_confirmation, token: nil)  
     end
   end
 
   def self.send_token(email)
     user = User.first(:email => email)
-    user.update(token: SecureRandom.hex)
+    user.update(token: SecureRandom.hex, time: (Time.now + 60 * 60))
   end
 
 end

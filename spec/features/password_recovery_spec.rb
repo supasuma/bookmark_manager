@@ -55,4 +55,19 @@ feature 'password recovery' do
       expect(current_path).to eq('/sessions/reset')
     end
 
+
+    scenario 'token expires after an hour' do
+      reset_password(user.email)
+      Timecop.freeze(Time.now + 60*61) do
+        visit "/sessions/reset/1234"
+        #save_and_open_page
+        fill_in :new_password, with: 'NewPassword'
+        fill_in :password_confirmation, with: 'NewPassword'
+        click_button 'Reset Password'
+        expect(current_path).to eq('/sessions/recover')
+        expect(page).to have_content("Your token has expired")
+      end
+
+    end
+
 end
