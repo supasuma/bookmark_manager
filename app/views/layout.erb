@@ -6,6 +6,7 @@
   <body>
     <% if current_user %>
     Welcome, <%= current_user.email %>
+    <a href="/sessions/sign_out">sign out</a>
     <% end %>
     <% if flash[:notice]%>
       <div id='notice'> <%= flash[:notice] %></div>

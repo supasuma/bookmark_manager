@@ -68,7 +68,13 @@ class BookMark < Sinatra::Base
     else
       flash.now[:errors] = ['The email or password is incorrect']
       erb :'sessions/new'
-    end 
+    end
+  end
+
+  get '/sessions/sign_out' do
+    flash[:notice] = "See ya later sucker, #{current_user.email}"
+    session[:user_id] = nil
+    redirect to('/links')
   end
 
 
