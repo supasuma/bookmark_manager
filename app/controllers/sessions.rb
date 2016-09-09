@@ -37,13 +37,16 @@ class BookMark < Sinatra::Base
   end
 
   post '/sessions/reset' do
-    check = User.reset_password(params[:token], params[:password], params[:password_confirmation])
-    if check
+    update = User.reset_password(params[:token], params[:new_password], params[:password_confirmation])
+    if update == false
+      flash.now[:errors] = ["Your Passwords do not match"]
+      erb :'sessions/reset'
+    elsif update == :wrong_token
+      flash[:errors] = ["Wrong Password Reset Link"]
+      redirect '/sessions/recover'
+    else
       flash[:notice] = "Your password has been reset"
       redirect '/sessions/new'
-    else
-      flash[:error] = "Your password has not been reset"
-      redirect '/sessions/reset/ResetToken'
     end
   end
 

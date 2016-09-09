@@ -30,4 +30,25 @@ feature 'password recovery' do
     expect(current_path).to eq('/sessions/new')
     expect(page).to have_content("Your password has been reset")
   end
+
+  scenario 'wrong token' do
+    visit '/sessions/reset/WrongToken'
+    fill_in :new_password, with: 'NewPassword'
+    fill_in :password_confirmation, with: 'NewPassword'
+    click_button 'Reset Password'
+    expect(page).to have_content("Wrong Password Reset Link")
+    expect(current_path).to eq('/sessions/recover')
+  end
+
+
+    scenario 'wrong token' do
+      reset_password(user.email)
+      visit '/sessions/reset/ResetToken'
+      fill_in :new_password, with: 'NewPassword'
+      fill_in :password_confirmation, with: 'OldPassword'
+      click_button 'Reset Password'
+      expect(page).to have_content("Your Passwords do not match")
+      expect(current_path).to eq('/sessions/reset')
+    end
+
 end

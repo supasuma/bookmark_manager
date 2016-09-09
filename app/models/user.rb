@@ -28,8 +28,11 @@ class User
 
   def self.reset_password(token, password, password_confirmation)
     user = first(token: token)
-    user.update(password: password, password_confirmation: password_confirmation)
+    if user
+      user.update(password: password, password_confirmation: password_confirmation, token: nil)
+    else
+      :wrong_token
+    end
   end
-
 
 end
