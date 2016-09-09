@@ -10,6 +10,7 @@ gem 'rake'
 gem 'bcrypt'
 gem 'sinatra-flash'
 gem 'sinatra-partial'
+gem 'launchy'
 
 group :test do
   gem 'capybara'

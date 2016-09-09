@@ -1,6 +1,7 @@
 require_relative '../data_mapper_setup'
 require 'dm-validations'
 require 'bcrypt'
+require 'securerandom'
 
 class User
   include DataMapper::Resource
@@ -8,7 +9,7 @@ class User
   property :id,     Serial
   property :email,  String, required: true, unique: true, format: :email_address
   property :password, BCryptHash
-  property :token, Text
+  property :token, String
 
   attr_reader :password
   attr_accessor :password_confirmation
@@ -33,6 +34,11 @@ class User
     else
       :wrong_token
     end
+  end
+
+  def self.send_token(email)
+    user = User.first(:email => email)
+    user.update(token: SecureRandom.hex)
   end
 
 end

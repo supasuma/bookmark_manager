@@ -25,10 +25,8 @@ class BookMark < Sinatra::Base
   end
 
   post '/sessions/recover' do
-    user = User.first(:email => params[:email])
-    user.update(:token => 'ResetToken')
-    token = user.token
-    flash[:notice] = "You have been sent a recovery email - #{token}"
+    User.send_token(params[:email])
+    flash[:notice] = "You have been sent a recovery email"
   end
 
   get '/sessions/reset/:token' do

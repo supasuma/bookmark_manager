@@ -11,6 +11,7 @@ feature 'password recovery' do
   before do
     sign_in(email: user.email, password: 'flash')
     click_link 'sign out'
+    allow(SecureRandom).to receive(:hex).and_return(1234)
   end
 
   scenario 'get password recovery' do
@@ -18,17 +19,20 @@ feature 'password recovery' do
     click_link 'Forgot Password'
     fill_in :email, with: user.email
     click_button 'Recover Password'
-    expect(page).to have_content("You have been sent a recovery email - #{user.token}")
+    expect(page).to have_content("You have been sent a recovery email")
   end
 
   scenario 'reset password' do
     reset_password(user.email)
-    visit '/sessions/reset/ResetToken'
+    visit "/sessions/reset/1234"
+    #save_and_open_page
     fill_in :new_password, with: 'NewPassword'
     fill_in :password_confirmation, with: 'NewPassword'
     click_button 'Reset Password'
     expect(current_path).to eq('/sessions/new')
     expect(page).to have_content("Your password has been reset")
+    sign_in(email: user.email, password: 'NewPassword')
+    expect(page).to have_content("Welcome, #{user.email}")
   end
 
   scenario 'wrong token' do
@@ -41,9 +45,9 @@ feature 'password recovery' do
   end
 
 
-    scenario 'wrong token' do
+    scenario 'wrong password' do
       reset_password(user.email)
-      visit '/sessions/reset/ResetToken'
+      visit "/sessions/reset/1234"
       fill_in :new_password, with: 'NewPassword'
       fill_in :password_confirmation, with: 'OldPassword'
       click_button 'Reset Password'
